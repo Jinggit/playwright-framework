@@ -69,8 +69,8 @@ pytest --headed
 
 ### Cypress
 ```javascript
-cy.get('input[name="username"]').type('jingghster')
-cy.get('input[name="password"]').type('2566')
+cy.get('input[name="name"]').type('jingghster')
+cy.get('input[name="user_pin"]').type('2566')
 cy.contains('Login').click()
 
 ```
@@ -78,11 +78,11 @@ cy.contains('Login').click()
 ```bash
 Input Text    name=username    jingghster
 Input Text    name=user_pin    2566
-Click Button  xpath=//button[@id="commit"]
+Click Button  xpath=//button[@name="commit"]
 
 ```
 ### Playwright (Python)
 ```python
-page.locator('input[name="username"]').fill("jingghster")
+page.locator('input[name="name"]').fill("jingghster")
 page.locator('input[name="user_pin"]').fill("2566")
-page.get_by_role("button", name="Login").click()
+page.get_by_role("button", name="commit").click()

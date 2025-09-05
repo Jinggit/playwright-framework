@@ -18,6 +18,7 @@ test-results/
 playwright-report/
 blob-report/
 trace.zip
+report/
 
 
 results.xml

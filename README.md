@@ -75,11 +75,14 @@ cy.contains('Login').click()
 
 ```
 ### Robot Framework
+```bash
 Input Text    name=username    jingghster
 Input Text    name=user_pin    2566
 Click Button  xpath=//button[@id="commit"]
 
+```
 ### Playwright (Python)
+```python
 page.locator('input[name="username"]').fill("jingghster")
 page.locator('input[name="user_pin"]').fill("2566")
 page.get_by_role("button", name="Login").click()

@@ -61,9 +61,9 @@ pytest --headed
 
 | Framework | Locator methods | Key features | Example |
 |-----------|----------------|--------------|---------|
-| **Cypress** | `cy.get()`, `cy.contains()`, `cy.xpath()` (via plugin) | Chainable, auto-retry, best with CSS selectors | `cy.get('input[name="username"]')`<br>`cy.contains('Login')` |
-| **Robot Framework (SeleniumLibrary/BrowserLibrary)** | Keyword + locator strategy (`id=`, `name=`, `css=`, `xpath=`) | Human-readable, supports multiple locator types | `Input Text    id=username    jingghster`<br>`Click Button   xpath=//button[@id="login"]` |
-| **Playwright** | `page.locator()`, `page.get_by_*` | Built-in **strict mode** (unique matches), powerful selector API, auto-waiting | `page.locator('#username').fill('jingghster')`<br>`page.get_by_role("button", name="Login").click()` |
+| ***Cypress*** | `cy.get()`, `cy.contains()`, `cy.xpath()` (via plugin) | Chainable, auto-retry, best with CSS selectors | `cy.get('input[name="username"]')`<br>`cy.contains('Login')` |
+| ***Robot Framework SeleniumLibrary*** | Keyword + locator strategy (`id=`, `name=`, `css=`, `xpath=`) | Human-readable, supports multiple locator types | `Input Text    id=username    jingghster`<br>`Click Button   xpath=//button[@id="login"]` |
+| ***Playwright*** | `page.locator()`, `page.get_by_*` | Built-in ***strict mode*** (unique matches), powerful selector API, auto-waiting | `page.locator('#username').fill('jingghster')`<br>`page.get_by_role("button", name="Login").click()` |
 
 ## Example: Fill username + password + click login
 

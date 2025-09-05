@@ -1,6 +1,6 @@
 import mysql.connector
 
-def query_db(query, config):
+def query_db(query, config, params=None):
     db_conf = config["db"]
     conn = mysql.connector.connect(
         host=db_conf["host"],
@@ -9,7 +9,7 @@ def query_db(query, config):
         database=db_conf["database"]
     )
     cursor = conn.cursor()
-    cursor.execute(query)
+    cursor.execute(query, params or ())
     result = cursor.fetchall()
     conn.close()
     return result

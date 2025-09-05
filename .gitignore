@@ -9,17 +9,17 @@ venv/
 .env/
 .venv/
 
-# Pytest / cache
+
 .pytest_cache/
 *.log
 
-# Playwright artifacts
+
 test-results/
 playwright-report/
 blob-report/
 trace.zip
 
-# Robot / Allure (如果有扩展)
+
 output.xml
 log.html
 report.html

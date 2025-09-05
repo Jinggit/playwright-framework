@@ -20,8 +20,7 @@ blob-report/
 trace.zip
 
 
-output.xml
-log.html
+results.xml
 report.html
 allure-results/
 allure-report/

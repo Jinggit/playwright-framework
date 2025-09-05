@@ -1,0 +1,10 @@
+{
+  "baseUrl": "https://ottawa.bibliocommons.com",
+  "apiUrl": "https://ottawa.bibliocommons.com",
+  "db": {
+    "host": "localhost",
+    "user": "root",
+    "password": "1234",
+    "database": "demo_db"
+  }
+}

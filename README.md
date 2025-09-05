@@ -55,3 +55,31 @@ pytest -v --env=qa
 
 pytest --headed
 
+# Locator Comparison Across Frameworks
+
+## Framework Differences
+
+| Framework | Locator methods | Key features | Example |
+|-----------|----------------|--------------|---------|
+| **Cypress** | `cy.get()`, `cy.contains()`, `cy.xpath()` (via plugin) | Chainable, auto-retry, best with CSS selectors | `cy.get('input[name="username"]')`<br>`cy.contains('Login')` |
+| **Robot Framework (SeleniumLibrary/BrowserLibrary)** | Keyword + locator strategy (`id=`, `name=`, `css=`, `xpath=`) | Human-readable, supports multiple locator types | `Input Text    id=username    jingghster`<br>`Click Button   xpath=//button[@id="login"]` |
+| **Playwright** | `page.locator()`, `page.get_by_*` | Built-in **strict mode** (unique matches), powerful selector API, auto-waiting | `page.locator('#username').fill('jingghster')`<br>`page.get_by_role("button", name="Login").click()` |
+
+## Example: Fill username + password + click login
+
+### Cypress
+```javascript
+cy.get('input[name="username"]').type('jingghster')
+cy.get('input[name="password"]').type('2566')
+cy.contains('Login').click()
+
+```
+### Robot Framework
+Input Text    name=username    jingghster
+Input Text    name=user_pin    2566
+Click Button  xpath=//button[@id="commit"]
+
+### Playwright (Python)
+page.locator('input[name="username"]').fill("jingghster")
+page.locator('input[name="user_pin"]').fill("2566")
+page.get_by_role("button", name="Login").click()

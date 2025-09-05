@@ -14,6 +14,7 @@ It demonstrates **UI, API, and DB validation** in one place, with support for mu
 - **Multi-environment support** (`--env=qa/staging/prod`)  
 - **Reports**: JUnit XML, pytest-html, Allure, Playwright trace  
 
+![Login page screenshot](demo.GIF)
 ---
 
 ## Project Structure

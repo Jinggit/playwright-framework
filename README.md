@@ -1,46 +1,68 @@
 # Playwright POM Automation Framework
 
-This project is an **end-to-end automation framework** using **Playwright + Pytest + Page Object Model (POM)**.  
-It demonstrates **UI, API, and DB validation** in one place, with support for multiple environments (qa, staging, prod).  
+This project is an end-to-end automation testing framework built with Playwright + Pytest + Page Object Model (POM), designed specifically for Dynamics 365 CRM.
 
+Since CRM often uses MFA (Multi-Factor Authentication) (e.g., SMS, Authenticator app), direct username/password login automation is not feasible.
+Instead, this framework uses Playwright’s storage state mechanism to persist a logged-in session (crm_state_qa.json, crm_state_stage.json, …).
+The browser session is saved once (after completing MFA manually) and then reused for all automated test runs.
 ---
 
 ## Features
+- **UI Testing for Dynamics 365 CRM
+- **MFA-friendly login (via storage_state JSON)
+- **Page Object Model (POM) for maintainable design
+- **API Testing with requests
+- **Database Validation with MySQL
+- **Multi-environment support (--env=qa/staging/prod)
+- **Reports: JUnit XML, pytest-html, Allure, Playwright trace
 
-- **UI testing** with Playwright (auto-waiting, cross-browser)  
-- **API testing** with Requests  
-- **Database validation** with MySQL connector  
-- **Page Object Model (POM)** for maintainable design  
-- **Multi-environment support** (`--env=qa/staging/prod`)  
-- **Reports**: JUnit XML, pytest-html, Allure, Playwright trace  
+## How MFA Login is Handled
 
-![Login page screenshot](demo.GIF)
+```
+Run once manually with MFA
+
+python save_login.py --env=qa
+
+This script launches a headed browser (--headed), opens Dynamics 365 CRM,
+you log in manually with MFA.
+After successful login, Playwright saves cookies + storage into crm_state_qa.json.
+
+Subsequent test runs reuse session
+In tests, the page fixture loads this saved state:
+
+context = await browser.new_context(storage_state="crm_state_qa.json")
+
+
+This bypasses MFA and allows automation to run in a logged-in session.
+```
 ---
 
 ## Project Structure
 ```bash
 playwright-framework/
-│── tests/ # Test suites
-│ └── test_login.py # Example: UI + DB validation
-│
-│── pages/ # Page Object Model (POM)
-│ ├── login_page.py # Login page actions
-│ └── dashboard_page.py # Dashboard assertions + DB check
-│
-│── utils/ # Helpers
-│ ├── api_utils.py # API requests
-│ ├── db_utils.py # DB queries
-│ └── config_loader.py # Load env configs
-│
 │── configs/ # Environment configs
 │ ├── qa.json
 │ ├── staging.json
 │ └── prod.json
-│
-│── conftest.py # Pytest fixtures (env, page, config)
-│── requirements.txt # Python dependencies
-│── README.md
-
+│── conftest.py # Pytest fixtures
+│── pages/                  # Page Object Model classes
+│   ├── base_page.py        # BasePage (common actions)
+│   ├── login_page.py       # Login page / Sales App actions
+│   └── dashboard_page.py   # Dashboard + assertions
+│── tests/                  # Test suites
+│   └── test_login.py       # Example CRM login + validation
+│── utils/                  # Helpers
+│   ├── config_loader.py    # Loads configs (qa/staging/prod)
+│   ├── db_utils.py         # Database helper
+│   └── api_utils.py        # API helper
+│── reports/                # HTML/XML reports
+│── crm_state_qa.json       # Saved login session (MFA passed)
+│── crm_state_stage.json    # Saved login session (MFA passed)
+│── conftest.py             # Pytest fixtures (env, page, config)
+│── requirements.txt        # Dependencies
+│── save_login.py           # Script to save login state after MFA
+│── pytest.ini              # Pytest config
+│── README.md               # Documentation
 
 ```
 ## Install dependencies

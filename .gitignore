@@ -1,3 +1,10 @@
+*.json
+
+# env
+configs/
+qa.json
+stage.json
+
 # Python cache
 __pycache__/
 *.pyc

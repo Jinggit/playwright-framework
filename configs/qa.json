@@ -1,6 +1,6 @@
 {
-  "baseUrl": "https://ottawa.bibliocommons.com",
-  "apiUrl": "https://ottawa.bibliocommons.com",
+  "baseUrl": "https://d-rpm.crm3.dynamics.com",
+  "apiUrl": "https://s-rpm.crm3.dynamics.com",
   "db": {
     "host": "localhost",
     "user": "root",

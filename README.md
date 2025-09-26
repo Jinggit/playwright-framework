@@ -36,8 +36,8 @@ context = await browser.new_context(storage_state="crm_state_qa.json")
 ```
 
 This bypasses MFA and allows automation to run in a logged-in session.
-```
----
+
+
 
 ## Project Structure
 ```bash

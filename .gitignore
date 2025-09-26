@@ -1,7 +1,8 @@
-*.json
+crm_state_dev.json
+crm_state_qa.json
+crm_state_stage.json
 
 # env
-configs/
 qa.json
 stage.json
 

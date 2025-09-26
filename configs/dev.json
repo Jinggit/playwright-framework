@@ -1,0 +1,10 @@
+{
+  "baseUrl": "https://d-rpm.crm.dynamics.com",
+  "apiUrl": "https://d-rpm.crm.dynamics.com",
+  "db": {
+    "host": "localhost",
+    "user": "root",
+    "password": "1234",
+    "database": "demo_db"
+  }
+}

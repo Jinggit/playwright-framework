@@ -18,9 +18,13 @@ async def page(config, request):
 
     headed = request.config.getoption("--headed")
     headless = not headed
+    browser_name = request.config.getoption("--browser") or "chromium"
+    if isinstance(browser_name, list):
+        browser_name = browser_name[0]
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=headless)
+        browser_launcher = getattr(p, browser_name)
+        browser = await browser_launcher.launch(headless=headless)
         context = await browser.new_context(storage_state=state_file)
         page = await context.new_page()
         yield page

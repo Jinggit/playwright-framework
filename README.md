@@ -5,33 +5,33 @@ This project is an end-to-end automation testing framework built with Playwright
 Since CRM often uses MFA (Multi-Factor Authentication) (e.g., SMS, Authenticator app), direct username/password login automation is not feasible.
 Instead, this framework uses Playwright’s storage state mechanism to persist a logged-in session (crm_state_qa.json, crm_state_stage.json, …).
 The browser session is saved once (after completing MFA manually) and then reused for all automated test runs.
+
 ---
 
 ## Features
-- **UI Testing for Dynamics 365 CRM
-- **MFA-friendly login (via storage_state JSON)
-- **Page Object Model (POM) for maintainable design
-- **API Testing with requests
-- **Database Validation with MySQL
-- **Multi-environment support (--env=qa/staging/prod)
-- **Reports: JUnit XML, pytest-html, Allure, Playwright trace
+- **UI Testing for Dynamics 365 CRM**
+- **MFA-friendly login (via storage_state JSON)**
+- **Page Object Model (POM) for maintainable design**
+- **API Testing with requests**
+- **Database Validation with MySQL**
+- **Multi-environment support (--env=qa/staging/prod)**
+- **Reports: JUnit XML, pytest-html, Allure, Playwright trace**
 
 ## How MFA Login is Handled
 
 ```
-Run once manually with MFA
+1. Run once manually with MFA
 
 python save_login.py --env=qa
 
-This script launches a headed browser (--headed), opens Dynamics 365 CRM,
-you log in manually with MFA.
+This script launches a headed browser (--headed), opens Dynamics 365 CRM, you log in manually with MFA.
 After successful login, Playwright saves cookies + storage into crm_state_qa.json.
 
-Subsequent test runs reuse session
+2. Subsequent test runs reuse session
+
 In tests, the page fixture loads this saved state:
 
 context = await browser.new_context(storage_state="crm_state_qa.json")
-
 
 This bypasses MFA and allows automation to run in a logged-in session.
 ```

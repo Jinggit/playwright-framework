@@ -19,19 +19,21 @@ The browser session is saved once (after completing MFA manually) and then reuse
 
 ## How MFA Login is Handled
 
+**1. Run once manually with MFA**
 ```
-1. Run once manually with MFA
-
 python save_login.py --env=qa
+```
 
 This script launches a headed browser (--headed), opens Dynamics 365 CRM, you log in manually with MFA.
 After successful login, Playwright saves cookies + storage into crm_state_qa.json.
 
-2. Subsequent test runs reuse session
+**2. Subsequent test runs reuse session**
 
 In tests, the page fixture loads this saved state:
 
+```
 context = await browser.new_context(storage_state="crm_state_qa.json")
+```
 
 This bypasses MFA and allows automation to run in a logged-in session.
 ```

@@ -1,3 +1,5 @@
+import contextlib
+
 import pytest
 import pytest_asyncio
 from utils.config_loader import load_config
@@ -27,5 +29,12 @@ async def page(config, request):
         browser = await browser_launcher.launch(headless=headless)
         context = await browser.new_context(storage_state=state_file)
         page = await context.new_page()
-        yield page
-        await browser.close()
+        page.set_default_timeout(60000)
+        page.set_default_navigation_timeout(60000)
+        try:
+            yield page
+        finally:
+            with contextlib.suppress(Exception):
+                await context.close()
+            with contextlib.suppress(Exception):
+                await browser.close()

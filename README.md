@@ -52,7 +52,7 @@ playwright-framework/
 │   ├── login_page.py       # Login page / Sales App actions
 │   └── dashboard_page.py   # Dashboard + assertions
 │── tests/                  # Test suites
-│   └── test_login.py       # Example CRM login + validation
+│   └── test_edit_opportunity_success.py       # Example CRM login + validation
 │── utils/                  # Helpers
 │   ├── config_loader.py    # Loads configs (qa/staging/prod)
 │   ├── db_utils.py         # Database helper

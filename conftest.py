@@ -27,8 +27,9 @@ async def page(config, request):
     async with async_playwright() as p:
         browser_launcher = getattr(p, browser_name)
         browser = await browser_launcher.launch(headless=headless)
-        context = await browser.new_context(storage_state=state_file)
+        context = await browser.new_context(storage_state=state_file, viewport={"width": 1920, "height": 1080})
         page = await context.new_page()
+        await page.set_viewport_size({"width": 1920, "height": 1080})
         page.set_default_timeout(60000)
         page.set_default_navigation_timeout(60000)
         try:

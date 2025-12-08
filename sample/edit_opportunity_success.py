@@ -2,7 +2,7 @@ import pytest
 from playwright.async_api import expect
 
 from pages.login_page import LoginPage
-from pages.dashboard_page import DashboardPage
+from pages.opportunity_page import OpportunityPage
 from pages.base_page import BasePage
 
 
@@ -24,11 +24,11 @@ async def test_edit_opportunity_success(page, config):
     await page.goto(config["baseUrl"])
     base_page = BasePage(page)
     login_page = LoginPage(page)
-    dashboard = DashboardPage(page)
+    opportunity = OpportunityPage(page)
 
     # Step 2: Open Sales App and navigate to Opportunities
     await login_page.open_sales_app()
-    await dashboard.go_to_opportunities()
+    await opportunity.go_to_opportunities()
     await expect(page.locator("h1:has-text('My Open Opportunities')")).to_be_visible()
 
     # Step 3: Double-click the first row to open Opportunity details
@@ -47,6 +47,7 @@ async def test_edit_opportunity_success(page, config):
     options = ["Provision of Expertise", "Procurement of Goods & Services"]
     for opt in options:
         await page.get_by_role("option", name=opt).click()
+        await page.wait_for_timeout(2000)
     await page.keyboard.press("Escape")
 
     # Step 6: Save the record and return to the Opportunities list
@@ -65,6 +66,7 @@ async def test_edit_opportunity_success(page, config):
     for opt in options:
         delete_button = page.locator("button.msos-quick-delete[aria-label='Remove " +opt +"']")
         await delete_button.click()
+        await page.wait_for_timeout(2000)
     checkbox = page.get_by_label("Air Transport & Economic Planning")
     await checkbox.click(force=True)
     await page.locator("xpath=(//button[contains(@title,'Save (CTRL+S)')])[1]").click()

@@ -50,9 +50,9 @@ playwright-framework/
 │── pages/                  # Page Object Model classes
 │   ├── base_page.py        # BasePage (common actions)
 │   ├── login_page.py       # Login page / Sales App actions
-│   └── dashboard_page.py   # Dashboard + assertions
+│   └── opportunity_page.py   # Dashboard + assertions
 │── tests/                  # Test suites
-│   └── test_edit_opportunity_success.py       # Example CRM login + validation
+│   └── edit_opportunity_success.py       # Example CRM login + validation
 │── utils/                  # Helpers
 │   ├── config_loader.py    # Loads configs (qa/staging/prod)
 │   ├── db_utils.py         # Database helper

@@ -9,6 +9,7 @@ class LoginPage(BasePage):
         self.login_btn = '[name="commit"]'
         self.app_frame = "iframe#AppLandingPage"
         self.sales_app_text = "ICAO Sales App"
+        self.cprm_app_text = "CPMR 2026-2028"
 
     async def open_login_page(self, base_url: str):
         """for login with username and password"""
@@ -24,5 +25,10 @@ class LoginPage(BasePage):
         """Enter Sales App"""
         frame = self.get_frame(self.app_frame)
         await frame.get_by_text(self.sales_app_text).click()
+
+    async def open_cprm_app(self):
+        """Enter CPRM App"""
+        frame = self.get_frame(self.app_frame)
+        await frame.get_by_text(self.cprm_app_text).first.click()
 
 

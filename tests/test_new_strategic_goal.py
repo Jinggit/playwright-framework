@@ -53,7 +53,7 @@ async def test_new_strategic_goal(page, config):
     await filter_box.fill(sg_code)
     await filter_box.press("Enter")
 
-    result = page.get_by_text(sg_code, exact=True)
-    await expect(result.first).to_be_visible()
+    result = page.locator("[role='gridcell']").filter(has_text=sg_code).first
+    await expect(result).to_be_visible()
 
     print(f"Strategic Goal created: SG Code={sg_code}, SG Text={sg_text}")

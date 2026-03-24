@@ -52,7 +52,7 @@ async def test_new_sdg(page, config):
     filter_box = page.get_by_placeholder("Filter by keyword")
     await filter_box.fill(sdg_name)
     await filter_box.press("Enter")
-    result = page.get_by_text(sdg_name, exact=True)
-    await expect(result.first).to_be_visible()
+    result = page.locator("[role='gridcell']").filter(has_text=sdg_name).first
+    await expect(result).to_be_visible()
 
     print(f"SDG created: Number={sdg_number}, Name={sdg_name}")

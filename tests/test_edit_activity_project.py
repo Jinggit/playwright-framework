@@ -1,3 +1,5 @@
+import re
+
 import pytest
 from playwright.async_api import expect
 
@@ -40,11 +42,13 @@ async def test_edit_activity_project(page, config):
 
     # Step 4: Modify the Origin of Decision
     await page.get_by_role("combobox", name="Origin of Decision").click()
-    await page.get_by_role("option", name="Council").click()
+    await page.get_by_role("option", name=re.compile(r"^Council$")).click(force=True)
+    await page.get_by_label("Decision Ref").fill("QA")
 
     # Open lookup search popup and modify Cost Center
     await page.get_by_role("button", name="Search records for Cost Center, Lookup field").click()
     await page.locator("div[role='presentation']").filter(has_text="C1011").first.click()
+    await page.keyboard.press("Escape")
     await page.wait_for_timeout(3000)
 
     # Step 5: Save the record and return to the Activities list
@@ -52,6 +56,7 @@ async def test_edit_activity_project(page, config):
     await page.click("button[title='Go back']")
 
     # Step 6: Re-open the same record and verify the change
+    await page.keyboard.press("Escape")
     first_row = page.locator("div[role='row']").nth(1)
     await first_row.dblclick()
     field = page.get_by_role("combobox", name="Origin of Decision")
@@ -59,8 +64,10 @@ async def test_edit_activity_project(page, config):
 
     # Step 7: Reset the data back to its original state.
     await page.get_by_role("combobox", name="Origin of Decision").click()
-    await page.get_by_role("option", name="Assembly").click()
+    await page.get_by_role("option", name=re.compile(r"^Assembly$")).click(force=True)
+    await page.get_by_label("Assembly").fill("QA")
     await page.get_by_role("button", name="Search records for Cost Center, Lookup field").click()
     await page.locator("div[role='presentation']").filter(has_text="C1010").first.click()
+    await page.keyboard.press("Escape")
     await page.locator("xpath=(//button[contains(@title,'Save (CTRL+S)')])[1]").click()
     await page.click("button[title='Go back']")

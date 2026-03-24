@@ -1,4 +1,7 @@
+import argparse
+
 from playwright.sync_api import sync_playwright
+
 from utils.config_loader import load_config
 
 def save_login(env="qa"):
@@ -15,9 +18,12 @@ def save_login(env="qa"):
         input("press enter to continue...")
 
         context.storage_state(path=f"crm_state_{env}.json")
-        print("saved to crm_state_{env}.json")
+        print(f"saved to crm_state_{env}.json")
 
         browser.close()
 
 if __name__ == "__main__":
-    save_login("stage")
+    parser = argparse.ArgumentParser(description="Save Playwright login state for an environment.")
+    parser.add_argument("--env", default="dev", help="Environment config to use, for example dev.")
+    args = parser.parse_args()
+    save_login(args.env)

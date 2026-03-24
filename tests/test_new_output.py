@@ -1,5 +1,6 @@
 import pytest
 import random
+import re
 from playwright.async_api import expect
 
 from pages.login_page import LoginPage
@@ -44,7 +45,7 @@ async def test_new_output(page, config):
 
     # Step 4: Select Outcome
     await page.get_by_role("button", name="Search records for Outcome, Lookup field").click()
-    await page.get_by_role("treeitem").filter(has_text=outcome).click()
+    await page.get_by_role("treeitem", name=re.compile(rf"^{re.escape(outcome)},")).first.click()
 
     # Step 5: Fill Output Code
     await page.get_by_label("Output Code").fill(output_code)
@@ -71,7 +72,7 @@ async def test_new_output(page, config):
     await filter_box.fill(output_code)
     await filter_box.press("Enter")
 
-    result = page.get_by_text(output_code, exact=True)
-    await expect(result.first).to_be_visible()
+    result = page.locator("[role='gridcell']").filter(has_text=output_code).first
+    await expect(result).to_be_visible()
 
     print(f"Output created successfully: {output_code} | {output_name}")

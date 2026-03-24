@@ -64,7 +64,7 @@ async def test_new_cost_center(page, config):
     await filter_box.press("Enter")
 
     # --- Acceptable validation: Count ≥ 1 ---
-    result = page.get_by_text(cost_center_code, exact=True)
-    await expect(result.first).to_be_visible()
+    result = page.locator("[role='gridcell']").filter(has_text=cost_center_code).first
+    await expect(result).to_be_visible()
 
     print(f"Cost Center created successfully: {cost_center_code}")

@@ -2,6 +2,7 @@ import pytest
 from playwright.async_api import expect
 import time
 import random
+import re
 
 from pages.login_page import LoginPage
 from pages.base_page import BasePage
@@ -36,7 +37,7 @@ async def test_new_programme(page, config):
     programme_page = ProgrammePage(page)
     await programme_page.go_to_programmes()
     await expect(
-        page.get_by_role("button", name="Active Programs")
+        page.get_by_role("button", name=re.compile(r"^Active Program"))
     ).to_be_visible()
 
     # ------------- Step 4: New Programme -------------
@@ -71,7 +72,7 @@ async def test_new_programme(page, config):
     await filter_box.press("Enter")
 
     # Expected: programme name appears exactly once
-    result = page.get_by_text(programme_code, exact=True)
-    await expect(result.first).to_be_visible()
+    result = page.locator("[role='gridcell']").filter(has_text=programme_code).first
+    await expect(result).to_be_visible()
 
     print(f"Programme created successfully: {programme_code}")
